@@ -31,6 +31,10 @@ function App() {
       })
   }
 
+  // login page 마무리하기 (sign in, log in 버튼에 기능 넣기)
+  // 첫 화면에서 글 불러오게 (board, writings 가져와서 넣기)
+  // publish 눌렀을 때 회원 확인 후 진행
+
 
 
   return (
