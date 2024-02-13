@@ -64,7 +64,7 @@ function AlwaysOpenExample(props) {
                             }
                             </h4>
 
-                            <p>{writing.author}</p>
+                            <p>{writing.authorNickname}</p>
                         </div>
                         
                         

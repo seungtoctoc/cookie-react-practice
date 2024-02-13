@@ -12,7 +12,7 @@ export default function Login(props) {
     const [nickname, setNickname] = useState('');
 
     const setIsLoggingIn = props.setIsLoggingIn;
-    const getNickname = props.getNickname;
+    const getIdAndNickname = props.getIdAndNickname;
 
     const signup = (email, password, nickname) => {
         const data = {
@@ -44,7 +44,7 @@ export default function Login(props) {
         .then(resp => {
         alert("login complete");
         setIsLoggingIn(false);
-        getNickname();
+        getIdAndNickname();
         })
         .catch(err => {
         alert("[error] " + err);

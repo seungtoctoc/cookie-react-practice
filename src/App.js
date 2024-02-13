@@ -16,6 +16,7 @@ import Board from './components/Board';
 
 function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [id, setId] = useState('');
   const [nickname, setNickname] = useState('');
   const [writings, setWritings] = useState([]);
 
@@ -23,12 +24,14 @@ function App() {
     getWritings();
   }, [])
 
-  const getNickname = () => {
+  const getIdAndNickname = () => {
     const protectedUrl = '/users/protected';
 
     axios.get(protectedUrl)
       .then(resp => {
+        const id = resp.id;
         const nickname = resp.data.nickname;
+        setId(id)
         setNickname(nickname);
       })
       .catch(err => {
@@ -72,7 +75,7 @@ function App() {
         </Navigation>
       </div>
       
-      
+
       <Board
         writings={writings}>
       </Board>
@@ -81,7 +84,7 @@ function App() {
       {isLoggingIn ? 
         <Login
           setIsLoggingIn={setIsLoggingIn}
-          getNickname={getNickname}>
+          getIdAndNickname={getIdAndNickname}>
         </Login>
         :
         <></>
@@ -91,6 +94,7 @@ function App() {
       {nickname != '' ? 
         <Publish
           nickname={nickname}
+          id={id}
           getWritings={getWritings}>
         </Publish>
       :

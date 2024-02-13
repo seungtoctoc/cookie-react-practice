@@ -13,6 +13,7 @@ export default function Publish(props) {
 
     const getWritings = props.getWritings;
     const nickname = props.nickname;
+    const id = props.id;
 
     const clickNewPostButton = () => {
         setPublishing(true);
@@ -27,7 +28,8 @@ export default function Publish(props) {
 
         const data = {
             title: title,
-            author: nickname,
+            authorId: id,
+            authorNickname: nickname,
             content: content,
             color: color
         }
