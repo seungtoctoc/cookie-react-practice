@@ -11,7 +11,7 @@ export default function Navigation() {
 
 
   return (
-      <Navbar expand="lg" className="bg-body-tertiary container">
+      <Navbar expand="lg" className="bg-body-tertiary container" style={{width:'100%'}}>
         <Container fluid>
           <Navbar.Brand href="#">TodoList</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />

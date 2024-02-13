@@ -14,10 +14,8 @@ import Login from './components/Login';
 
 function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isMember, setIsMember] = useState(false);
-  
+  const [nickname, setNickname] = useState('');
 
-  const userUrl = '/users/';
 
   const signup = (email, password, nickname) => {
     const data = {
@@ -26,18 +24,47 @@ function App() {
       nickname: nickname
     }
 
-    const signupUrl = userUrl + 'signup';
+    const signupUrl = '/users/signup';
 
     axios.post(signupUrl, data)
       .then(resp => {
           alert("signup complete");
       })
       .catch(err => {
-          alert("error: " + err);
+          alert("[error] " + err);
       })
   }
 
+  const login = (email, password) => {
+    const data = {
+      email: email,
+      password: password
+    }
 
+    const loginUrl = '/users/login';
+
+    axios.post(loginUrl, data)
+      .then(resp => {
+        alert("login complete");
+        setIsLoggingIn(false);
+        getNickname();
+      })
+      .catch(err => {
+        alert("[error] " + err);
+      })
+  }
+
+  const getNickname = () => {
+    const protectedUrl = '/users/protected';
+
+    axios.get(protectedUrl)
+      .then(resp => {
+        const nickname = resp.data.nickname;
+        setNickname(nickname);
+      })
+  }
+
+  
 
   // login page 마무리하기 (sign in, log in 버튼에 기능 넣기)
   // 첫 화면에서 글 불러오게 (board, writings 가져와서 넣기)
@@ -49,14 +76,13 @@ function App() {
     <div className="App">
       <Header></Header>
 
-      {isMember ? 
-        <UserInfo>
-
+      {nickname != '' ? 
+        <UserInfo
+          nickname={nickname}>
         </UserInfo>
       :
         <LoginBtn
           setIsLoggingIn={setIsLoggingIn}>
-
         </LoginBtn>
       }
 
@@ -68,7 +94,8 @@ function App() {
       {isLoggingIn ? 
         <Login
           setIsLoggingIn={setIsLoggingIn}
-          signup={signup}>
+          signup={signup}
+          login={login}>
         </Login>
         :
         <></>
