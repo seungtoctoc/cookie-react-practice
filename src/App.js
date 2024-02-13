@@ -55,21 +55,24 @@ function App() {
       <Header></Header>
 
 
-      {nickname != '' ? 
-        <UserInfo
-          nickname={nickname}
-          setNickname={setNickname}>
-        </UserInfo>
-      :
-        <LoginBtn
-          setIsLoggingIn={setIsLoggingIn}>
-        </LoginBtn>
-      }
+      <div style={{display:'flex', flexDirection:'column'}}>
+        {nickname != '' ? 
+          <UserInfo
+            nickname={nickname}
+            setNickname={setNickname}>
+          </UserInfo>
+        :
+          <LoginBtn
+            setIsLoggingIn={setIsLoggingIn}>
+          </LoginBtn>
+        }
 
-
-      <Navigation>
-      </Navigation>
-
+        <Navigation
+          style={{display:'block'}}>
+        </Navigation>
+      </div>
+      
+      
       <Board
         writings={writings}>
       </Board>
