@@ -2,6 +2,7 @@ import {useState} from "react";
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 export default function Login(props) {
     const [isSigningup, setIsSigingup] = useState(false);
@@ -11,8 +12,44 @@ export default function Login(props) {
     const [nickname, setNickname] = useState('');
 
     const setIsLoggingIn = props.setIsLoggingIn;
-    const signup = props.signup;
-    const login = props.login;
+    const getNickname = props.getNickname;
+
+    const signup = (email, password, nickname) => {
+        const data = {
+          email: email,
+          password: password,
+          nickname: nickname
+        }
+    
+        const signupUrl = '/users/signup';
+    
+        axios.post(signupUrl, data)
+          .then(resp => {
+              alert("signup complete");
+          })
+          .catch(err => {
+              alert("[error] " + err);
+          })
+    }
+
+    const login = (email, password) => {
+    const data = {
+        email: email,
+        password: password
+    }
+
+    const loginUrl = '/users/login';
+
+    axios.post(loginUrl, data)
+        .then(resp => {
+        alert("login complete");
+        setIsLoggingIn(false);
+        getNickname();
+        })
+        .catch(err => {
+        alert("[error] " + err);
+        })
+    }
 
     const clickLoginBtn = () => {
         login(email, password);

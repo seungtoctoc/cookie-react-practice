@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 import './App.css';
 
@@ -10,49 +10,20 @@ import LoginBtn from './components/LoginBtn';
 import UserInfo from './components/UserInfo'
 import Navigation from './components/Navigation';
 import Login from './components/Login';
+import Publish from './components/Publish';
+import Board from './components/Board';
 
 
 function App() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [writings, setWritings] = useState([]);
+
+  useEffect(() => {
+    getWritings();
+  }, [])
 
 
-  const signup = (email, password, nickname) => {
-    const data = {
-      email: email,
-      password: password,
-      nickname: nickname
-    }
-
-    const signupUrl = '/users/signup';
-
-    axios.post(signupUrl, data)
-      .then(resp => {
-          alert("signup complete");
-      })
-      .catch(err => {
-          alert("[error] " + err);
-      })
-  }
-
-  const login = (email, password) => {
-    const data = {
-      email: email,
-      password: password
-    }
-
-    const loginUrl = '/users/login';
-
-    axios.post(loginUrl, data)
-      .then(resp => {
-        alert("login complete");
-        setIsLoggingIn(false);
-        getNickname();
-      })
-      .catch(err => {
-        alert("[error] " + err);
-      })
-  }
 
   const getNickname = () => {
     const protectedUrl = '/users/protected';
@@ -62,12 +33,23 @@ function App() {
         const nickname = resp.data.nickname;
         setNickname(nickname);
       })
+      .catch(err => {
+        alert("[error] " + err);
+      })
   }
 
-  
 
-  // login page 마무리하기 (sign in, log in 버튼에 기능 넣기)
-  // 첫 화면에서 글 불러오게 (board, writings 가져와서 넣기)
+
+  const getWritings = () => {
+    const getWritingsUrl = '/board/writings';
+
+    axios.get(getWritingsUrl)
+      .then(resp => {
+        setWritings(resp.data);
+      })
+  }
+
+  // 첫 화면에서 글 불러오게 - board, writing 구현
   // publish 눌렀을 때 회원 확인 후 진행
 
 
@@ -76,9 +58,11 @@ function App() {
     <div className="App">
       <Header></Header>
 
+
       {nickname != '' ? 
         <UserInfo
-          nickname={nickname}>
+          nickname={nickname}
+          setNickname={setNickname}>
         </UserInfo>
       :
         <LoginBtn
@@ -94,13 +78,23 @@ function App() {
       {isLoggingIn ? 
         <Login
           setIsLoggingIn={setIsLoggingIn}
-          signup={signup}
-          login={login}>
+          getNickname={getNickname}>
         </Login>
         :
         <></>
       }
      
+      <Board
+        writings={writings}>
+      </Board>
+
+
+      {nickname != '' ? 
+        <Publish>
+        </Publish>
+      :
+        <></>
+      }
 
     </div>
   );
