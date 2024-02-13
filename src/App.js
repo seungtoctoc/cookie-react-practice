@@ -23,8 +23,6 @@ function App() {
     getWritings();
   }, [])
 
-
-
   const getNickname = () => {
     const protectedUrl = '/users/protected';
 
@@ -38,8 +36,6 @@ function App() {
       })
   }
 
-
-
   const getWritings = () => {
     const getWritingsUrl = '/board/writings';
 
@@ -49,7 +45,7 @@ function App() {
       })
   }
 
-  // 첫 화면에서 글 불러오게 - board, writing 구현
+
   // publish 눌렀을 때 회원 확인 후 진행
 
 
@@ -90,7 +86,9 @@ function App() {
 
 
       {nickname != '' ? 
-        <Publish>
+        <Publish
+          nickname={nickname}
+          getWritings={getWritings}>
         </Publish>
       :
         <></>

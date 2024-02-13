@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Color from './Color'
+import axios from 'axios';
 
 export default function Publish(props) {
     const [publishing, setPublishing] = useState(false);
@@ -10,9 +11,10 @@ export default function Publish(props) {
     const [title, setTitle] = useState('');
     const [color, setColor] = useState(1);
 
-    const publishWriting = props.publishWriting;
+    const getWritings = props.getWritings;
+    const nickname = props.nickname;
 
-    const clickPublishButton = () => {
+    const clickNewPostButton = () => {
         setPublishing(true);
     }
 
@@ -20,8 +22,25 @@ export default function Publish(props) {
         setPublishing(false);
     }
 
-    const clickCompleteButton = () => {
-        
+    const clickPublishButton = () => {
+        const publishWritingUrl = '/board';
+
+        const data = {
+            title: title,
+            author: nickname,
+            content: content,
+            color: color
+        }
+
+        axios.post(publishWritingUrl, data)
+            .then(resp => {
+                alert('publish complete');
+                setPublishing(false);
+                getWritings();
+            })
+            .catch(err => {
+                alert("[error] " + err);
+            })
     }
     
     return (
@@ -36,14 +55,15 @@ export default function Publish(props) {
                             style={{marginBottom:'10px'}}/>
 
                         <Form.Control as="textarea" rows={9}
+                            placeholder="content"     
                             onChange={(e) => setContent(e.target.value)}
-                            onKeyDown={(e) => e.key === 'Enter' && clickCompleteButton()}/>
+                            onKeyDown={(e) => e.key === 'Enter' && clickPublishButton()}/>
             
                         <Color setColor={setColor}></Color>
 
                         <div className="mt-4 d-flex justify-content-end">
                             <Button variant="success" className="m-2"
-                                onClick={(() => clickCompleteButton())}>
+                                onClick={(() => clickPublishButton())}>
                                 Publish
                             </Button>
                                     
@@ -58,7 +78,7 @@ export default function Publish(props) {
             :<>
                 <div style={{position:'fixed', bottom:'0', margin:'14px', width:'100%'}}>
                     <Button variant="success" style={{width:'300px', zIndex:'2'}}
-                        onClick={(() => clickPublishButton())}>
+                        onClick={(() => clickNewPostButton())}>
                         New Post
                     </Button>
                 </div>

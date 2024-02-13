@@ -14,8 +14,6 @@ export default function LoginBtn(props) {
                     Log in
                 </Button>
             </div> 
-
-            
         </div>
     )
 }
