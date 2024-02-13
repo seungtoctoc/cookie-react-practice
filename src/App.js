@@ -1,6 +1,5 @@
-import react, {useState} from 'react';
+import {useState} from 'react';
 
-import logo from './logo.svg';
 import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,19 +17,27 @@ function App() {
   const [isMember, setIsMember] = useState(false);
   
 
-  const userUrl = '127.0.0.1:3000/users/';
+  const userUrl = '/users/';
 
-  const login = (email, password) => {
+  const signup = (email, password, nickname) => {
     const data = {
       email: email,
-      password: password
+      password: password,
+      nickname: nickname
     }
 
-    axios.get(userUrl + 'login', data)
+    const signupUrl = userUrl + 'signup';
+
+    axios.post(signupUrl, data)
       .then(resp => {
-        console.log(resp);
+          alert("signup complete");
+      })
+      .catch(err => {
+          alert("error: " + err);
       })
   }
+
+
 
   // login page 마무리하기 (sign in, log in 버튼에 기능 넣기)
   // 첫 화면에서 글 불러오게 (board, writings 가져와서 넣기)
@@ -60,7 +67,8 @@ function App() {
 
       {isLoggingIn ? 
         <Login
-          setIsLoggingIn={setIsLoggingIn}>  
+          setIsLoggingIn={setIsLoggingIn}
+          signup={signup}>
         </Login>
         :
         <></>

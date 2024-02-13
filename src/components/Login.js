@@ -9,13 +9,14 @@ export default function Login(props) {
     const [nickname, setNickname] = useState('');
 
     const setIsLoggingIn = props.setIsLoggingIn;
+    const signup = props.signup;
 
     const clickLoginBtn = () => {
         
     }
 
     const clickSigninBtn = () => {
-
+        signup(email, password, nickname);
     }
 
     return (
@@ -25,7 +26,7 @@ export default function Login(props) {
                     <Form.Label style={{float:'left', marginLeft:'10px'}}>Email address</Form.Label>
                     <Form.Control 
                         type="email" 
-                        placeholder="name@example.com" 
+                        placeholder="email@example.com" 
                         style={{marginBottom:'20px'}}
                         onChange={(e) => setEmail(e.target.value)}/>
                 
@@ -38,8 +39,8 @@ export default function Login(props) {
                 
                     <Form.Label style={{float:'left', marginLeft:'10px'}}>Nickname</Form.Label>
                     <Form.Control 
-                        type="password" 
-                        placeholder="Password"
+                        type="text" 
+                        placeholder="nickname"
                         style={{marginBottom:'40px'}}
                         onChange={(e) => setNickname(e.target.value)}/>
                 
