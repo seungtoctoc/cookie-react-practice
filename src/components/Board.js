@@ -6,7 +6,7 @@ export default function Board(props) {
     const writings = props.writings;
 
     return (
-        <div className='container mt-5' style={{zIndex:'1', paddingBottom:'300px'}}>
+        <div className='container mt-5' style={{paddingBottom:'300px'}}>
             {writings.map(writing => (
                 <Writing
                     writing={writing}>    

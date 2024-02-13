@@ -70,6 +70,10 @@ function App() {
       <Navigation>
       </Navigation>
 
+      <Board
+        writings={writings}>
+      </Board>
+
 
       {isLoggingIn ? 
         <Login
@@ -80,10 +84,6 @@ function App() {
         <></>
       }
      
-      <Board
-        writings={writings}>
-      </Board>
-
 
       {nickname != '' ? 
         <Publish
@@ -93,6 +93,7 @@ function App() {
       :
         <></>
       }
+      
 
     </div>
   );

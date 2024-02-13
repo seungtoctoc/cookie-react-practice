@@ -22,8 +22,7 @@ export default function Navigation() {
               style={{ maxHeight: '100px' }}
               navbarScroll>
               
-              <Nav.Link href="#action1">Publish</Nav.Link>
-          
+
             </Nav>
 
             <Form className="d-flex">
